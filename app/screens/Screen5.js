@@ -21,10 +21,12 @@ class Screen extends Component {
                 drawUnderNavBar: true,
                 navBarTranslucent: true,
                 navBarTransparent: true,
+                navBarTextColor: 'white',
             },
             android: {
                 drawUnderNavBar: true,
                 navBarTransparent: true,
+                navBarTextColor: 'white',
             },
         }),
     };
@@ -33,6 +35,7 @@ class Screen extends Component {
     const { 
       container,  
       imageTopSection, 
+      linearGradient,
       containerGeneral,
       topPart,
       middlePart,
@@ -44,50 +47,76 @@ class Screen extends Component {
       textEndPart,
       buttonEndPartStyle,
       textShadow,
-      borderDev,
     } = styles;
 
     return (
+    
       <View style={container}>
         <Image 
             source={testPicturePotrait} 
             style={imageTopSection} 
             resizeMode={'cover'}
-        />  
-        
-
+        > 
+            <LinearGradient  
+                colors={['transparent', 'black', 'black']} 
+                locations={[0.3, 0.9, 1.3]} 
+                style={linearGradient} 
+            />
+        </Image> 
         
          <View style={containerGeneral} >
             <View style={topPart} />
             <View style={middlePart} >
                 <View style={middlePartDescription} >
                     <Text style={[textShadow, { color: 'white', fontSize: 35 }]} > Jeniffer </Text>
-                    <Text style={[textShadow, { color: 'burlywood', fontSize: 13 }]} > Ajax Developer </Text>
+                    <Text 
+                        style={[textShadow, { color: 'burlywood', fontSize: 13 }]} 
+                    > Ajax Developer </Text>
                 </View>
                 <View style={middlePartImage} >
                     <View style={middlePartImageText} >
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'burlywood' }}>36</Text>
+                        <Text 
+                            style={{ fontSize: 30, fontWeight: 'bold', color: 'burlywood' }}
+                        >36</Text>
                         <Text>Posts</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Image 
-                            style={{ marginRight: 20, height: 180, width: 180, overflow: 'hidden' }} 
+                            style={{ marginRight: 20, 
+                                     height: 180, 
+                                     width: 180, 
+                                     overflow: 'hidden' }} 
+                                     
                             source={testPicture} 
                             borderRadius={10}
                             resizeMode={'cover'}
                         />
-                        <Image style={{ height: 180, width: 180, borderColor: 'black', borderRadius: 10 }} source={testPicture} borderRadius={10} />
+                        <Image 
+                            style={{ height: 180, 
+                                     width: 180, 
+                                     borderColor: 'black', 
+                                     borderRadius: 10 }} 
+
+                            source={testPicture} 
+                            borderRadius={10} 
+                        />
                     </View>
                 </View>
             </View>
             <View style={endPart} >
                 <View style={textEndContainer}>
                     <Text style={textEndPart} > 2041 </Text>
-                    <Text style={[textEndPart, { fontSize: 15, fontWeight: '300', color: 'orange' }]} > Following </Text>
+                    <Text 
+                        style={[textEndPart, 
+                        { fontSize: 15, fontWeight: '300', color: 'orange' }]}
+                    > Following </Text>
                 </View>
                 <View style={textEndContainer}>
                     <Text style={textEndPart} > 302K </Text>
-                    <Text style={[textEndPart, { fontSize: 15, fontWeight: '300', color: 'orange' }]} > Followers </Text>
+                    <Text 
+                        style={[textEndPart, 
+                        { fontSize: 15, fontWeight: '300', color: 'orange' }]}
+                    > Followers </Text>
                 </View>
                 <View style={textEndContainer}>
                     <TouchableOpacity onPress={() => {}} style={buttonEndPartStyle} >
@@ -95,7 +124,10 @@ class Screen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={[textEndContainer, { width: 50 }]}>
-                    <TouchableOpacity style={[buttonEndPartStyle, { height: 30, width: 42, backgroundColor: 'white' }]} >
+                    <TouchableOpacity 
+                        style={[buttonEndPartStyle, 
+                        { height: 30, width: 42, backgroundColor: 'white' }]} 
+                    >
                         <Text style={{ color: 'black', fontWeight: 'bold' }}> Text </Text>
                     </TouchableOpacity>
                 </View>
@@ -107,6 +139,14 @@ class Screen extends Component {
 }
 
 const styles = StyleSheet.create({
+    linearGradient: {
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    },
     container: {
         flex: 1,
         // alignItems: 'center'
@@ -193,12 +233,6 @@ const styles = StyleSheet.create({
     borderDev: {
         borderWidth: 1,
         borderColor: 'black',
-    },
-    linearGradient: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5
     },
     buttonText: {
         fontSize: 18,
