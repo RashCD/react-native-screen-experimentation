@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  Platform,
 } from 'react-native';
 
 const DeviceInfo = require('react-native-device-info');
@@ -12,7 +13,9 @@ const DeviceInfo = require('react-native-device-info');
 class Screen extends Component {
 
     deviceInfo = () => {
-        console.log('Device Unique ID', DeviceInfo.getUniqueID());
+        if (Platform.OS === 'ios') {
+            console.log('Device Unique ID', DeviceInfo.getUniqueID());
+        } 
     }
 
     render() {

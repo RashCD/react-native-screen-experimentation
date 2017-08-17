@@ -8,6 +8,7 @@ import Screen5 from './screens/Screen5';
 import Screen6 from './screens/Screen6';
 import Screen7 from './screens/ScreenTest';
 import Screen8 from './screens/ScreenDeviceID';
+import Screen9 from './screens/ScreenCardUI';
 
 const iconNormal = require('./images/icon1.png');
 const iconHighlight = require('./images/icon1_selected.png');
@@ -23,12 +24,13 @@ export default () => {
   Navigation.registerComponent('Screen6', () => Screen6);
   Navigation.registerComponent('Screen7', () => Screen7);
   Navigation.registerComponent('Screen8', () => Screen8);
+  Navigation.registerComponent('Screen9', () => Screen9);
 
   Navigation.startTabBasedApp({
     tabs: [
       {
         label: 'One',
-        screen: 'Screen7',
+        screen: 'Screen9',
         icon: iconNormal,
         selectedIcon: iconHighlight,
         title: 'Screen One'
