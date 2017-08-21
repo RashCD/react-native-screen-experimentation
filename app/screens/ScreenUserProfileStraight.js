@@ -20,6 +20,7 @@ class Screen extends Component {
                 navBarTranslucent: true,
                 navBarTransparent: true,
                 tabBarHidden: true,
+                navBarTextColor: 'white'
             },
             android: {
                 drawUnderNavBar: true,
@@ -31,6 +32,7 @@ class Screen extends Component {
   
   render() {
     const {  
+      container,
       imageTopSection, 
       iconFloat,
       circleIcon,
@@ -49,47 +51,49 @@ class Screen extends Component {
     } = base;
 
     return (
-            <Image source={testPicture} style={imageTopSection} >
-                <View style={endPartContainer} >
-                    <View style={endPart}>
-                        <View style={{ marginTop: 60 }}>
-                            <Text style={endPartMarginText}> Neel Litoriya </Text>
-                            <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 5, paddingRight: 10, }} >
-                                <View>
-                                    <Text style={text}> Photographer </Text>
-                                    <Text style={text}> Photographer </Text>
+            <View style={container} >
+                <Image source={testPicture} style={imageTopSection} >
+                    <View style={endPartContainer} >
+                        <View style={endPart}>
+                            <View style={{ marginTop: 60 }}>
+                                <Text style={endPartMarginText}> Neel Litoriya </Text>
+                                <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 5, paddingRight: 10, }} >
+                                    <View>
+                                        <Text style={text}> Photographer </Text>
+                                        <Text style={text}> Photographer </Text>
+                                    </View>
+                                    <TouchableOpacity style={buttonAdd} >
+                                        <Text style={{ color: 'white' }}> + ADD </Text>
+                                    </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity style={buttonAdd} >
-                                    <Text style={{ color: 'white' }}> + ADD </Text>
-                                </TouchableOpacity>
+                                <View style={profileDetailsContainer} >
+                                    <TouchableOpacity style={profileDetails} >
+                                        <Text style={text}> Views </Text>
+                                        <Text style={profileDetailsNumbers}> 624 </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={profileDetails} >
+                                        <Text style={text}> Followers </Text>
+                                        <Text style={profileDetailsNumbers}> 142 </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={profileDetails} >
+                                        <Text style={text}> Likes </Text>
+                                        <Text style={profileDetailsNumbers}> 104 </Text>
+                                    </TouchableOpacity>
+                                </View>
+                                
                             </View>
-                            <View style={profileDetailsContainer} >
-                                <TouchableOpacity style={profileDetails} >
-                                    <Text style={text}> Views </Text>
-                                    <Text style={profileDetailsNumbers}> 624 </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={profileDetails} >
-                                    <Text style={text}> Followers </Text>
-                                    <Text style={profileDetailsNumbers}> 142 </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={profileDetails} >
-                                    <Text style={text}> Likes </Text>
-                                    <Text style={profileDetailsNumbers}> 104 </Text>
-                                </TouchableOpacity>
-                            </View>
-                            
+                        </View> 
+                        <View style={[iconFloat]}>
+                            <Image 
+                                style={circleIcon} 
+                                source={testPicturePotrait} 
+                                borderRadius={50} 
+                                resizeMode="cover" 
+                            />
                         </View>
-                    </View> 
-                    <View style={[iconFloat]}>
-                        <Image 
-                            style={circleIcon} 
-                            source={testPicturePotrait} 
-                            borderRadius={50} 
-                            resizeMode="cover" 
-                        />
                     </View>
-                </View>
-            </Image>
+                </Image>
+            </View>
             
     );
   }
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center'
   },
   imageTopSection: {
-    flex: 1,
+    // flex: 1,
     height: '100%',
     width: '100%',
     justifyContent: 'flex-end',
