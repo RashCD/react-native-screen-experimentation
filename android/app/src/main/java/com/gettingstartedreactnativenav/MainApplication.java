@@ -10,6 +10,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,9 +26,10 @@ public class MainApplication extends NavigationApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new RNDeviceInfo(),
           new MainReactPackage(),
-          new LinearGradientPackage()
+          new LinearGradientPackage(),
+          new RNDeviceInfo(),
+          new RCTCameraPackage()
       );
     }
   };
