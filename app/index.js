@@ -36,7 +36,7 @@ export default () => {
     tabs: [
       {
         label: 'One',
-        screen: 'Screen12',
+        screen: 'Screen11',
         icon: iconNormal,
         selectedIcon: iconHighlight,
         title: 'Screen One'
