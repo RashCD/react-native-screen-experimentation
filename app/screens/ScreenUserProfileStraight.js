@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Image,
+  ImageBackground,
   Platform,
   TouchableOpacity, 
 } from 'react-native';
@@ -52,7 +53,7 @@ class Screen extends Component {
 
     return (
             <View style={container} >
-                <Image source={testPicture} style={imageTopSection} >
+                <ImageBackground source={testPicture} style={imageTopSection} >
                     <View style={endPartContainer} >
                         <View style={endPart}>
                             <View style={{ marginTop: 60 }}>
@@ -92,7 +93,7 @@ class Screen extends Component {
                             />
                         </View>
                     </View>
-                </Image>
+                </ImageBackground>
             </View>
             
     );
