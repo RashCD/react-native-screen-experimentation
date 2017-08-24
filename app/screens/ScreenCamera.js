@@ -1,101 +1,257 @@
-import React, { Component } from 'react';
-import { 
-  View,
-  Text,
-  StyleSheet,
+import React from 'react';
+import {
   Image,
-  Platform,
-  TouchableHighlight, 
- } from 'react-native';
-// import Camera, { constants } from 'react-native-camera';
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
+import Camera from 'react-native-camera';
 
-// const testPicture = require('../images/people.jpg');
-// const testPicturePotrait = require('../images/potrait.jpg');
-
-class Screen extends Component {
-
-    static navigatorStyle = {
-        ...Platform.select({
-            ios: {
-                drawUnderNavBar: true,
-                navBarTranslucent: true,
-                navBarTransparent: true,
-                tabBarHidden: true,
-                navBarTextColor: 'white'
-            },
-            android: {
-                drawUnderNavBar: true,
-                navBarTransparent: true,
-                tabBarHidden: true,
-            },
-        }),
-    };
-
-    // onPressIn() {
-    //     setTimeout(this.takeVideo.bind(this), 100);
-    // }
-    
-    // takeVideo() {
-    //     this.camera.capture({
-    //         target: constants.CaptureTarget.disk
-    //       })
-    //         .then(data => {
-    //           console.log(data);
-    //         })
-    //         .catch(err => console.log(err));
-
-    //     console.log('here');
-    // }
-
-    // stopVideo() {
-    //     this.camera.stopCapture();
-    // }
-
-    render() {
-        return (
-            <View style={styles.container}>
-                {/* <Camera
-                    ref={(cam) => {
-                        this.camera = cam;
-                    }}
-                    style={styles.preview}
-                    aspect={constants.Aspect.fill}
-                    captureMode={constants.CaptureMode.video} 
-                    captureTarget={constants.CaptureTarget.disk}
-                >
-                <TouchableHighlight
-                    onPressIn={this.onPressIn.bind(this)}
-                    onPressOut={this.stopVideo.bind(this)}
-                >
-                    <Text style={{ color: 'white' }}> Video </Text>
-                </TouchableHighlight>
-                </Camera> */}
-            </View>
-        );
-    }
-
-    
-}
+var {screenHeight, screenWidth} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    preview: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    },
-    capture: {
-        flex: 0,
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        color: '#000',
-        padding: 10,
-        margin: 40
+  container: {
+    // flex: 1,
+    width: screenWidth,
+    height: 500,
+  },
+  preview: {
+    // width: screenWidth,
+    // height: (screenHeight / 2),
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  overlay: {
+    position: 'absolute',
+    padding: 16,
+    right: 0,
+    left: 0,
+    alignItems: 'center',
+  },
+  topOverlay: {
+    top: 0,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  bottomOverlay: {
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  captureButton: {
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 40,
+  },
+  typeButton: {
+    padding: 5,
+  },
+  flashButton: {
+    padding: 5,
+  },
+  buttonsSpace: {
+    width: 10,
+  },
+});
+
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.camera = null;
+
+    this.state = {
+      camera: {
+        aspect: Camera.constants.Aspect.stretch,
+        captureTarget: Camera.constants.CaptureTarget.cameraRoll,
+        captureQuality: Camera.constants.CaptureQuality.low,
+        type: Camera.constants.Type.back,
+        orientation: Camera.constants.Orientation.auto,
+        flashMode: Camera.constants.FlashMode.auto,
+      },
+      isRecording: false
+    };
+  }
+
+  takePicture = () => {
+    if (this.camera) {
+      this.camera.capture()
+        .then((data) => console.log(data))
+        .catch(err => console.error(err));
     }
-});  
+  }
 
+  startRecording = () => {
+    if (this.camera) {
+      this.camera.capture({mode: Camera.constants.CaptureMode.video})
+          .then((data) => console.log(data))
+          .catch(err => console.error(err));
+      this.setState({
+        isRecording: true
+      });
+    }
+  }
 
-export default Screen;
+  stopRecording = () => {
+    if (this.camera) {
+      this.camera.stopCapture();
+      this.setState({
+        isRecording: false
+      });
+    }
+  }
+
+  switchType = () => {
+    let newType;
+    const { back, front } = Camera.constants.Type;
+
+    if (this.state.camera.type === back) {
+      newType = front;
+    } else if (this.state.camera.type === front) {
+      newType = back;
+    }
+
+    this.setState({
+      camera: {
+        ...this.state.camera,
+        type: newType,
+      },
+    });
+  }
+
+  get typeIcon() {
+    let icon;
+    const { back, front } = Camera.constants.Type;
+
+    if (this.state.camera.type === back) {
+      icon = require('../assets/ic_camera_rear_white.png');
+    } else if (this.state.camera.type === front) {
+      icon = require('../assets/ic_camera_front_white.png');
+    }
+
+    return icon;
+  }
+
+  switchFlash = () => {
+    let newFlashMode;
+    const { auto, on, off } = Camera.constants.FlashMode;
+
+    if (this.state.camera.flashMode === auto) {
+      newFlashMode = on;
+    } else if (this.state.camera.flashMode === on) {
+      newFlashMode = off;
+    } else if (this.state.camera.flashMode === off) {
+      newFlashMode = auto;
+    }
+
+    this.setState({
+      camera: {
+        ...this.state.camera,
+        flashMode: newFlashMode,
+      },
+    });
+  }
+
+  get flashIcon() {
+    let icon;
+    const { auto, on, off } = Camera.constants.FlashMode;
+
+    if (this.state.camera.flashMode === auto) {
+      icon = require('../assets/ic_flash_auto_white.png');
+    } else if (this.state.camera.flashMode === on) {
+      icon = require('../assets/ic_flash_on_white.png');
+    } else if (this.state.camera.flashMode === off) {
+      icon = require('../assets/ic_flash_off_white.png');
+    }
+
+    return icon;
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <StatusBar
+          animated
+          hidden
+        />
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          style={styles.preview}
+          aspect={this.state.camera.aspect}
+          captureTarget={this.state.camera.captureTarget}
+          type={this.state.camera.type}
+          flashMode={this.state.camera.flashMode}
+          onFocusChanged={() => {}}
+          onZoomChanged={() => {}}
+          defaultTouchToFocus
+          mirrorImage={false}
+        />
+        <View style={[styles.overlay, styles.topOverlay]}>
+          <TouchableOpacity
+            style={styles.typeButton}
+            onPress={this.switchType}
+          >
+            <Image
+              source={this.typeIcon}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.flashButton}
+            onPress={this.switchFlash}
+          >
+            <Image
+              source={this.flashIcon}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.overlay, styles.bottomOverlay]}>
+          {
+            !this.state.isRecording
+            &&
+            <TouchableOpacity
+                style={styles.captureButton}
+                onPress={this.takePicture}
+            >
+              <Image
+                  source={require('../assets/ic_photo_camera_36pt.png')}
+              />
+            </TouchableOpacity>
+            ||
+            null
+          }
+          <View style={styles.buttonsSpace} />
+          {
+              !this.state.isRecording
+              &&
+              <TouchableOpacity
+                  style={styles.captureButton}
+                  onPress={this.startRecording}
+              >
+                <Image
+                    source={require('../assets/ic_videocam_36pt.png')}
+                />
+              </TouchableOpacity>
+              ||
+              <TouchableOpacity
+                  style={styles.captureButton}
+                  onPress={this.stopRecording}
+              >
+                <Image
+                    source={require('../assets/ic_stop_36pt.png')}
+                />
+              </TouchableOpacity>
+          }
+        </View>
+      </View>
+    );
+  }
+}
