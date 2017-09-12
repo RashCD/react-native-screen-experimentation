@@ -12,6 +12,8 @@ import Screen9 from './screens/ScreenCardUI';
 import Screen10 from './screens/ProfileList';
 import Screen11 from './screens/ScreenUserProfileStraight';
 import Screen12 from './screens/ScreenCamera';
+import Screen13 from './screens/ScreenSharedElement';
+import Screen14 from './screens/ScreenSharedElement2';
 
 const iconNormal = require('./images/icon1.png');
 const iconHighlight = require('./images/icon1_selected.png');
@@ -31,12 +33,14 @@ export default () => {
   Navigation.registerComponent('Screen10', () => Screen10);
   Navigation.registerComponent('Screen11', () => Screen11);
   Navigation.registerComponent('Screen12', () => Screen12);
+  Navigation.registerComponent('Screen13', () => Screen13);
+  Navigation.registerComponent('Screen14', () => Screen14);
 
   Navigation.startTabBasedApp({
     tabs: [
       {
         label: 'One',
-        screen: 'Screen12',
+        screen: 'Screen13',
         icon: iconNormal,
         selectedIcon: iconHighlight,
         title: 'Screen One'

@@ -28,12 +28,12 @@ class Screen extends Component {
         return (
 
             <ScrollView contentContainerStyle={mainContainer} horizontal >
-                <View style={[  { justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }]}>
-                    <View style={[ rotateLeft, { top: 0 }]}>
+                <View style={[{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }]}>
+                    <View style={[rotateLeft, { top: 0 }]}>
                         <ImageCircle />
                         <ImageCircle />
                     </View>
-                    <View style={[ rotateLeft, { top: 0 }]}>
+                    <View style={[rotateLeft, { top: 0 }]}>
                         <ImageCircle />
                         <ImageCircle />
                         <ImageCircle />
