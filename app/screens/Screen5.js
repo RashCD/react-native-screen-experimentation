@@ -7,7 +7,7 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 
 
 const testPicture = require('../images/people.jpg');
@@ -35,7 +35,7 @@ class Screen extends Component {
     const { 
       container,  
       imageTopSection, 
-      linearGradient,
+    //   linearGradient,
       containerGeneral,
       topPart,
       middlePart,
@@ -57,11 +57,11 @@ class Screen extends Component {
             style={imageTopSection} 
             resizeMode={'cover'}
         > 
-            <LinearGradient  
+            {/* <LinearGradient  
                 colors={['transparent', 'black', 'black']} 
                 locations={[0.3, 0.9, 1.3]} 
                 style={linearGradient} 
-            />
+            /> */}
         </Image> 
         
          <View style={containerGeneral} >

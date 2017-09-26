@@ -16,6 +16,8 @@ import Screen13 from './screens/ScreenSharedElement';
 import Screen14 from './screens/ScreenSharedElement2';
 import Screen15 from './screens/ScreenTransitionTest';
 import Screen16 from './screens/ScreenTransitionTest2';
+import Screen17 from './screens/ScreenOverscrollEffect';
+import Screen18 from './screens/ScreenAnimation';
 
 const iconNormal = require('./images/icon1.png');
 const iconHighlight = require('./images/icon1_selected.png');
@@ -39,12 +41,14 @@ export default () => {
   Navigation.registerComponent('Screen14', () => Screen14);
   Navigation.registerComponent('Screen15', () => Screen15);
   Navigation.registerComponent('Screen16', () => Screen16);
+  Navigation.registerComponent('Screen17', () => Screen17);
+  Navigation.registerComponent('Screen18', () => Screen18);
 
   Navigation.startTabBasedApp({
     tabs: [
       {
         label: 'One',
-        screen: 'Screen15',
+        screen: 'Screen18',
         icon: iconNormal,
         selectedIcon: iconHighlight,
         title: 'Screen One'
