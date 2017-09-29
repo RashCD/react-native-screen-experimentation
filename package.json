@@ -13,6 +13,7 @@
     "react": "16.0.0-alpha.12",
     "react-native": "0.47.2",
     "react-native-animatable": "^1.2.3",
+    "react-native-blur": "3.0.0-alpha",
     "react-native-camera": "^0.10.0",
     "react-native-device-info": "^0.11.0",
     "react-native-linear-gradient": "^2.2.0",

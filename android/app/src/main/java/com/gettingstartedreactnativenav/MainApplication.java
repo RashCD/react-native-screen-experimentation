@@ -11,6 +11,7 @@ import com.reactnativenavigation.NavigationApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import com.cmcewen.blurview.BlurViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new BlurViewPackage(),
           new LinearGradientPackage(),
           new RNDeviceInfo(),
           new RCTCameraPackage()
