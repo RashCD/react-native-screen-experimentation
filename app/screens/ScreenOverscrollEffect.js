@@ -44,6 +44,10 @@ class Screen extends Component {
         );
     }
 
+    // blurRadiusEffect() {
+        
+    // }
+
     renderRow() {
         return (
             <View style={{ flex: 1, alignItems: 'center', marginTop: 30 }}>

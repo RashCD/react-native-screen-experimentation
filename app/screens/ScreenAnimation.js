@@ -112,11 +112,6 @@ class Screen extends Component {
     }
 
     render() {
-        // const blurr = this.blurEffect();
-        const blurAmount = this.state.scrollY.interpolate({
-            inputRange: [0, 100, 200],
-            outputRange: [0, 3, 5]
-        });
         return (
             <View style={styles.absolute}>
                 
@@ -145,7 +140,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     absolute: {
-      position: "absolute",
+      position: 'absolute',
       top: 0, 
       left: 0, 
       bottom: 0, 
