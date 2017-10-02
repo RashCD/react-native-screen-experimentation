@@ -128,7 +128,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-blur')
     compile project(':react-native-navigation')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23"
