@@ -30,6 +30,11 @@ public class MainApplication extends NavigationApplication {
           new RCTCameraPackage()
       );
     }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
+    }
   };
 
   @Override

@@ -13,15 +13,12 @@ import {
 
 const uriCats = 'https://www.petfinder.com/wp-content/uploads/2012/11/91615172-find-a-lump-on-cats-skin-632x475.jpg';
 
-const dataLists = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-
 const arrayList = [...Array(50)];
 
 const ScreenSize = Dimensions.get('window');
 
 let previousScrollHeight = 0;
 
-const animationValue = 0;
 
 class Screen extends Component {
     
@@ -31,50 +28,41 @@ class Screen extends Component {
         this.state = {
           dataSource: ds.cloneWithRows(arrayList),
           scrollY: new Animated.Value(0), 
-          test: new Animated.Value(0),
         };
     }
 
     onScrollEvents(e) {
+        // use animated driver to make scrolling smooth
         this.useAnimatedDriver();
+        // capture scroll event and set content off set
+        // division is to make scroll length small
         let page = Math.floor(e.nativeEvent.contentOffset.y / 100);
-
+        // ignore negative number registered when bounce effect occurs on ios. it will cause
+        // error on android
         if (page <= 0) {
             page = 0;
         }
+        // setup blur effect. pass scroll length
         this.setUpBlurElement(page);
     }
 
-
     setUpBlurElement(currentScrollHeight) {
+        // tickering with number to reduce setState() update for smooth transition
         if (previousScrollHeight + 2 === currentScrollHeight || previousScrollHeight - 2 === currentScrollHeight) {
+            // reduce same number being registered in the app. can cause stack overflow
             previousScrollHeight = currentScrollHeight;
-
-            // console.log(currentScrollHeight);
-
+            // doing animated manually. takes current scroll position and transform to animated value
             const anim = new Animated.Value(Math.floor(currentScrollHeight / 1));
-            // const animationValue = anim.interpolate({
-            //     inputRange: [0, ScreenSize.height],
-            //     outputRange: [0, 10]
-            // });
-            console.log(anim);
-
+            // setstate the value of animated to be used in other parts
             this.setState({
                 scrollY: anim
             });
         }
     }
 
-    blurRadiusEffect() {
-        const scroll = this.state.scrollY.interpolate({
-            inputRange: [0, ScreenSize.height],
-            outputRange: [0, 10]
-        });
-        return scroll;
-    }
-
     useAnimatedDriver() {
         return Animated.event([{
+            // this.state.scrollY must start at 0 position
             nativeEvent: { contentOffset: { y: this.state.scrollY } }
           }], {
             useNativeDriver: true
@@ -96,6 +84,7 @@ class Screen extends Component {
           <Animated.ScrollView
             scrollEventThrottle={15}
             onScroll={
+                // pass events to function using onScroll props
                 (e) => this.onScrollEvents(e)
             }
           />

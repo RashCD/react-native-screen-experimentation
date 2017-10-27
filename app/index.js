@@ -18,6 +18,8 @@ import Screen15 from './screens/ScreenTransitionTest';
 import Screen16 from './screens/ScreenTransitionTest2';
 import Screen17 from './screens/ScreenOverscrollEffect';
 import Screen18 from './screens/ScreenAnimation';
+import Screen19 from './screens/ScreenHorizontalVertical';
+import Screen20 from './screens/ScreenTestFlatlist';
 
 const iconNormal = require('./images/icon1.png');
 const iconHighlight = require('./images/icon1_selected.png');
@@ -43,12 +45,14 @@ export default () => {
   Navigation.registerComponent('Screen16', () => Screen16);
   Navigation.registerComponent('Screen17', () => Screen17);
   Navigation.registerComponent('Screen18', () => Screen18);
+  Navigation.registerComponent('Screen19', () => Screen19);
+  Navigation.registerComponent('Screen20', () => Screen20);
 
   Navigation.startTabBasedApp({
     tabs: [
       {
         label: 'One',
-        screen: 'Screen17',
+        screen: 'Screen20',
         icon: iconNormal,
         selectedIcon: iconHighlight,
         title: 'Screen One'
