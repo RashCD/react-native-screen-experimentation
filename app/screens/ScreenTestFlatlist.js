@@ -18,6 +18,8 @@ class testFlatlist extends Component {
             data: [],
             selected: []
         };
+
+        this.addedScroll = 0;
     }
 
     componentDidMount() {
@@ -37,10 +39,24 @@ class testFlatlist extends Component {
         });
     };
 
+    getItemLayout = (data, index) => (
+        { length: 40, offset: 40 * index, index }
+    )
+
+    scrollOffSet = () => {
+        console.log('here');
+        this.addedScroll += 500;
+        this.flatList.scrollToOffset({
+            animated: true, //can also be false
+            offset: this.addedScroll, 
+            // viewPosition: 0 //this is the first position that is currently attached to the window
+        });
+    }
+
     loadMore = () => {
         console.log('loadmore');
     }
-
+    
     keyExtractor = (item, index) => item.id;
 
     touch = (item) => {
@@ -48,20 +64,20 @@ class testFlatlist extends Component {
         return (
             <TouchableOpacity 
                 style={[
-                    { height: 40, width: 80, },
+                    { height: 40, width: 100, padding: 5 },
                     { borderRadius: 20, borderWidth: 1 },
                     { justifyContent: 'center', alignItems: 'center' },
-                      select ? { borderColor: 'black' }
-                             : { borderColor: 'white' }]}
+                        select ? { borderColor: 'black' }
+                                : { borderColor: 'white' }]}
                 onPress={() => this.onPress(item.id)}
             >
                 <Text 
                     style={[
-                    { fontSize: 11 }, 
-                      select ? { fontWeight: 'bold', color: 'red' } 
-                             : { color: 'black' }]}
+                    { fontSize: 11, backgroundColor: 'transparent' }, 
+                        select ? { fontWeight: 'bold', color: 'red' } 
+                                : { color: 'black' }]}
                 > 
-                Index No { item.id } 
+                Index No. { item.id } 
                 </Text>
             </TouchableOpacity>
         );
@@ -82,13 +98,27 @@ class testFlatlist extends Component {
     
     render() {
         return (
-            <FlatList
-                data={this.state.data}
-                extraData={this.state}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem}
-                onEndReached={this.loadMore}
-            />
+            <View>
+                <TouchableOpacity 
+                    onPress={() => this.scrollOffSet()}
+                    style={[
+                        { height: 30, width: 100 },
+                        { borderRadius: 20, borderWidth: 1, borderColor: 'black' },
+                        { justifyContent: 'center', alignItems: 'center' }]}
+                >
+                    <Text>Click Here</Text>
+                </TouchableOpacity>
+                <FlatList
+                    ref={(ref) => { this.flatList = ref; }}
+                    data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderItem}
+                    onEndReached={this.loadMore}
+                    getItemLayout={this.getItemLayout}
+                />
+            </View>
+            
         );
     }
 }
