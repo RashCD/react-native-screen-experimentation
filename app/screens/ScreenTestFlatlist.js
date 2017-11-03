@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 
-import { 
-    View,
-    Text,
-    FlatList,
-    StyleSheet,
-    Image,
-    TouchableOpacity,
-} from 'react-native';
- 
-class testFlatlist extends Component {
+import { View, Text, TextInput, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 
+const dimen = Dimensions.get('window');
+
+class testFlatlist extends Component {
     constructor(props) {
         super(props);
 
@@ -19,109 +13,144 @@ class testFlatlist extends Component {
             selected: []
         };
 
-        this.addedScroll = 0;
+        // this.indexScroll = 0;
+        this.maxArray = 1000;
     }
 
     componentDidMount() {
-        const constructArray = Array.from(Array(1000)).map((data, index) => {
-            return { id: index, selected: true };
-        });
+        const constructArray = Array.from(Array(this.maxArray)).map((data, index) => ({
+            id: index,
+            selected: true
+        }));
         this.setState({ data: constructArray });
+        setTimeout(() => this.autoScroll(), 1000);
     }
 
-    onPress = (id) => {
+    onPress = id => {
         // updater functions are preferred for transactional updates
-        this.setState((state) => {
-        // copy the map rather than modifying state.
+        this.setState(state => {
+            // copy the map rather than modifying state.
             const selected = [...state.data];
             selected[id].selected = !selected[id].selected;
             return { selected };
         });
     };
 
-    getItemLayout = (data, index) => (
-        { length: 40, offset: 40 * index, index }
-    )
+    getItemLayout = (data, index) => ({ length: 120, offset: 120 * index, index });
 
-    scrollOffSet = () => {
-        console.log('here');
-        this.addedScroll += 500;
+    autoScroll = indexScroll => {
+        let indexToScroll = Number(indexScroll) || 0;
+
+        if (indexToScroll >= this.maxArray) {
+            indexToScroll = this.maxArray - 1;
+        }
+
+        // scroll offset
         this.flatList.scrollToOffset({
-            animated: true, //can also be false
-            offset: this.addedScroll, 
-            // viewPosition: 0 //this is the first position that is currently attached to the window
+            animated: true,
+            offset: 400
         });
-    }
+
+        // scroll to index
+        // this.flatList.scrollToOffset({
+        //     animated: true,
+        //     index: indexToScroll,
+        //     viewPosition: 0
+        // });
+    };
 
     loadMore = () => {
         console.log('loadmore');
-    }
-    
-    keyExtractor = (item, index) => item.id;
+    };
 
-    touch = (item) => {
+    keyExtractor = item => item.id;
+
+    touch = item => {
         const select = item.selected;
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={[
                     { height: 40, width: 100, padding: 5 },
                     { borderRadius: 20, borderWidth: 1 },
-                    { justifyContent: 'center', alignItems: 'center' },
-                        select ? { borderColor: 'black' }
-                                : { borderColor: 'white' }]}
+                    {
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    },
+                    select ? { borderColor: 'black' } : { borderColor: 'white' }
+                ]}
                 onPress={() => this.onPress(item.id)}
             >
-                <Text 
+                <Text
                     style={[
-                    { fontSize: 11, backgroundColor: 'transparent' }, 
-                        select ? { fontWeight: 'bold', color: 'red' } 
-                                : { color: 'black' }]}
-                > 
-                Index No. { item.id } 
+                        {
+                            fontSize: 11,
+                            backgroundColor: 'transparent'
+                        },
+                        select
+                            ? {
+                                  fontWeight: 'bold',
+                                  color: 'red'
+                              }
+                            : { color: 'black' }
+                    ]}
+                >
+                    Index No. {item.id}
                 </Text>
             </TouchableOpacity>
         );
-    }
-    
+    };
+
     renderItem = ({ item }) => (
         <View style={{ flex: 1, alignItems: 'center' }}>
             <View
                 style={[
-                       { height: 100, width: 200, margin: 10, backgroundColor: 'lightblue' },
-                       { justifyContent: 'center', alignItems: 'center' }]}
+                    {
+                        height: 100,
+                        width: 200,
+                        margin: 10,
+                        backgroundColor: 'lightblue'
+                    },
+                    { justifyContent: 'center', alignItems: 'center' }
+                ]}
             >
                 {this.touch(item)}
             </View>
         </View>
-        
     );
-    
+
     render() {
         return (
             <View>
-                <TouchableOpacity 
-                    onPress={() => this.scrollOffSet()}
-                    style={[
-                        { height: 30, width: 100 },
-                        { borderRadius: 20, borderWidth: 1, borderColor: 'black' },
-                        { justifyContent: 'center', alignItems: 'center' }]}
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around'
+                    }}
                 >
-                    <Text>Click Here</Text>
-                </TouchableOpacity>
+                    {/* <TextInput
+                        style={{ height: 40, width: '50%' }}
+                        placeholder="Type your index to go to"
+                        onChangeText={index => {
+                            this.autoScroll(index);
+                        }}
+                    /> */}
+                </View>
+
                 <FlatList
-                    ref={(ref) => { this.flatList = ref; }}
+                    ref={ref => {
+                        this.flatList = ref;
+                    }}
                     data={this.state.data}
                     extraData={this.state}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderItem}
                     onEndReached={this.loadMore}
                     getItemLayout={this.getItemLayout}
+                    ListFooterComponent={() => <View style={{ height: dimen.height * (2 / 3) }} />}
                 />
             </View>
-            
         );
     }
 }
-
 
 export default testFlatlist;
