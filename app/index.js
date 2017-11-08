@@ -21,6 +21,7 @@ import Screen18 from './screens/ScreenAnimation';
 import Screen19 from './screens/ScreenHorizontalVertical';
 import Screen20 from './screens/ScreenTestFlatlist';
 import Screen21 from './screens/ScreenLottie';
+import Screen22 from './screens/ScreenHorizontalClicked';
 
 const iconNormal = require('./images/icon1.png');
 const iconHighlight = require('./images/icon1_selected.png');
@@ -49,6 +50,7 @@ export default () => {
     Navigation.registerComponent('Screen19', () => Screen19);
     Navigation.registerComponent('Screen20', () => Screen20);
     Navigation.registerComponent('Screen21', () => Screen21);
+    Navigation.registerComponent('Screen22', () => Screen22);
 
     Navigation.startTabBasedApp({
         tabs: [

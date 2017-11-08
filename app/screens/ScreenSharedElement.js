@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View, 
-  Text,
-  Image,
-  StyleSheet,
-  ListView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Image, StyleSheet, ListView, TouchableOpacity } from 'react-native';
 
 import { SharedElementTransition } from 'react-native-navigation';
 
@@ -17,32 +10,37 @@ class Screen extends Component {
         super();
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-          dataSource: ds.cloneWithRows(dataLists),
+            dataSource: ds.cloneWithRows(dataLists)
         };
-      }
+    }
 
-    pressElement = (rowID) => {
+    pressElement = rowID => {
         console.log('pressed');
         console.log(rowID);
         this.props.navigator.push({
             screen: 'Screen14',
-            sharedElements: ['sharedImageId' + rowID],
+            sharedElements: [`sharedImageId${rowID}`],
             passProps: {
                 rowID
             }
         });
-    }
-    
+    };
+
     renderRow(rowID) {
         return (
-            <SharedElementTransition sharedElementId={'sharedImageId' + rowID} style={{ width: 200, height: 100 }}>
-                <TouchableOpacity 
+            <SharedElementTransition
+                sharedElementId={`sharedImageId${rowID}`}
+                style={{ width: 200, height: 100 }}
+            >
+                <TouchableOpacity
                     style={{ height: 100, width: 200 }}
                     onPress={() => this.pressElement(rowID)}
                 >
                     <Image
                         style={{ flex: 1 }}
-                        source={{ uri: 'https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg' }}
+                        source={{
+                            uri: 'https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg'
+                        }}
                     />
 
                     <Text> Doggo {rowID} </Text>
@@ -54,14 +52,11 @@ class Screen extends Component {
     render() {
         return (
             <ListView
-            dataSource={this.state.dataSource}
-            renderRow={(rowData, sectionID, rowID) => this.renderRow(rowID)}
+                dataSource={this.state.dataSource}
+                renderRow={(rowData, sectionID, rowID) => this.renderRow(rowID)}
             />
-            
-            
         );
     }
 }
 
 export default Screen;
-

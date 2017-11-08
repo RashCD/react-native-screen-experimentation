@@ -1,9 +1,21 @@
 /* global fetch:false */
 /*eslint quote-props: ["error", "as-needed", { "keywords": true, "unnecessary": false }]*/
 import React, { PureComponent } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ImageBackground,
+    FlatList,
+    TouchableOpacity,
+    StyleSheet,
+    Animated,
+    TouchableHighlight
+} from 'react-native';
 
 import Animation from 'lottie-react-native';
+
+import { SharedElementTransition } from 'react-native-navigation';
 
 import CardUI from './_ScreenHorizontalCard';
 
@@ -28,10 +40,6 @@ class ScreenHorizontal extends PureComponent {
 
         this.page = 1;
 
-        this.API = props.propUrl;
-
-        this.API_OBJ = props.propObj;
-
         this.isShowingAnimation = false;
     }
 
@@ -49,17 +57,18 @@ class ScreenHorizontal extends PureComponent {
     setAnim = anim => (this.anim = anim);
 
     makeAPIRequest = () => {
-        const API_ENDPOINT = this.API;
+        const { propUrl, propObj } = this.props;
 
-        const object = {
+        const API_ENDPOINT = propUrl;
+        const API_OBJECT = {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                CategoryID: this.API_OBJ.CategoryID,
-                CategoryTypeID: this.API_OBJ.CategoryTypeID,
+                CategoryID: propObj.CategoryID,
+                CategoryTypeID: propObj.CategoryTypeID,
                 ProfileID: '1081',
                 Page: this.page,
                 Size: '5',
@@ -69,7 +78,7 @@ class ScreenHorizontal extends PureComponent {
             })
         };
 
-        fetch(API_ENDPOINT, object)
+        fetch(API_ENDPOINT, API_OBJECT)
             .then(res => res.json())
             .then(res => {
                 const { Items } = res.Result;
@@ -102,6 +111,16 @@ class ScreenHorizontal extends PureComponent {
                 this.isShowingAnimation = false;
                 this.forceUpdate();
                 this.makeAPIRequest();
+            }
+        });
+    };
+
+    newClickedScreen = (AllItems, AlbumID) => {
+        this.props.navigator.push({
+            screen: 'Screen22',
+            sharedElements: [`sharedImageId${AlbumID}`],
+            passProps: {
+                AllItems
             }
         });
     };
@@ -178,14 +197,39 @@ class ScreenHorizontal extends PureComponent {
 
         return (
             <CardUI style={[{ height: cardHeight, width: cardWidth, borderRadius: 0 }]}>
-                <View style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-                    <Image source={{ uri: AlbumCover }} style={{ flex: 3 }} resizeMode={'cover'} />
+                <TouchableOpacity
+                    style={{ flex: 1 }}
+                    onPress={() => {
+                        this.newClickedScreen(item.item, AlbumID);
+                    }}
+                >
+                    <SharedElementTransition
+                        sharedElementId={`sharedImageId${AlbumID}`}
+                        style={{ flex: 1 }}
+                    >
+                        <ImageBackground
+                            source={{ uri: AlbumCover }}
+                            style={{ flex: 1 }}
+                            resizeMode={'cover'}
+                        />
+                    </SharedElementTransition>
+                </TouchableOpacity>
+                <View
+                    style={{
+                        position: 'absolute',
+                        height: '45%',
+                        width: '100%',
+                        bottom: 0,
+                        padding: 10
+                    }}
+                >
                     <View
                         style={{
-                            height: 25,
+                            height: 30,
                             width: '100%',
                             alignItems: 'flex-end',
-                            paddingTop: 5
+                            paddingTop: 5,
+                            backgroundColor: 'transparent'
                         }}
                     >
                         {this.buttonFollow(canRepost, AlbumID)}
@@ -203,7 +247,14 @@ class ScreenHorizontal extends PureComponent {
                         {AlbumName}
                     </Text>
 
-                    <Text style={{ textAlign: 'right', color: 'darkslategrey', fontSize: 11 }}>
+                    <Text
+                        style={{
+                            textAlign: 'right',
+                            color: 'grey',
+                            backgroundColor: 'transparent',
+                            fontSize: 11
+                        }}
+                    >
                         {MomentDate}
                     </Text>
                 </View>

@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    FlatList,
+    ActivityIndicator,
+    StyleSheet,
+    TouchableOpacity
+} from 'react-native';
+
+import { SharedElementTransition } from 'react-native-navigation';
 
 import ScreenHorizontal from '../components/_ScreenHorizontal';
 
 class Screen extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             loadEndMore: true,
@@ -61,6 +71,13 @@ class Screen extends Component {
         );
     }
 
+    newClickedScreen = () => {
+        this.props.navigator.push({
+            screen: 'Screen22',
+            sharedElements: ['SharedTextId']
+        });
+    };
+
     // es6 function start
     activityIndicatorCommon = () => (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -87,7 +104,12 @@ class Screen extends Component {
         // console.log();
         <View style={{ flex: 1, marginLeft: 5, marginBottom: 15 }}>
             <Text style={styles.text}> Album {rowID.index + 1}</Text>
-            <ScreenHorizontal propUrl={this.urlAPI} propObj={rowID.item} key={rowID.index} />
+            <ScreenHorizontal
+                propUrl={this.urlAPI}
+                propObj={rowID.item}
+                key={rowID.index}
+                navigator={this.props.navigator}
+            />
         </View>
     );
 
