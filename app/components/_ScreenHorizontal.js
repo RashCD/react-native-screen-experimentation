@@ -9,8 +9,7 @@ import {
     FlatList,
     TouchableOpacity,
     StyleSheet,
-    Animated,
-    TouchableHighlight
+    Animated
 } from 'react-native';
 
 import Animation from 'lottie-react-native';
@@ -119,6 +118,13 @@ class ScreenHorizontal extends PureComponent {
         this.props.navigator.push({
             screen: 'Screen22',
             sharedElements: [`sharedImageId${AlbumID}`],
+            animated: true,
+            navigatorStyle: {
+                navBarTitleTextCentered: true,
+                navBarTranslucent: true,
+                drawUnderNavBar: true,
+                navBarTransparent: true
+            },
             passProps: {
                 AllItems
             }
@@ -126,7 +132,7 @@ class ScreenHorizontal extends PureComponent {
     };
 
     flipFollow = AlbumID => {
-        const tempArray = this.state.data;
+        const tempArray = [...this.state.data];
 
         tempArray.forEach((data, index) => {
             if (data.AlbumID === AlbumID) {
