@@ -1,34 +1,37 @@
 {
-  "name": "GettingStartedReactNativeNav",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
-  },
-  "dependencies": {
-    "electron": "^1.8.1",
-    "lottie-react-native": "2.2.7",
-    "merge": "^1.2.0",
-    "prop-types": "^15.6.0",
-    "react": "16.0.0-beta.5",
-    "react-native": "0.49.3",
-    "react-native-animatable": "^1.2.4",
-    "react-native-camera": "^0.10.0",
-    "react-native-device-info": "^0.11.0",
-    "react-native-linear-gradient": "^2.3.0",
-    "react-native-navigation": "^1.1.235"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-jest": "20.0.3",
-    "babel-loader": "^7.1.2",
-    "babel-preset-react-native": "3.0.1",
-    "eslint-config-rallycoding": "^3.2.0",
-    "jest": "20.0.4",
-    "react-test-renderer": "16.0.0-alpha.12"
-  },
-  "jest": {
-    "preset": "react-native"
-  }
+    "name": "GettingStartedReactNativeNav",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start-ios": "react-native run-ios",
+        "start-android-port": "react-native start --port 8082",
+        "start-android": "react-native run-android --port 8082",
+        "start": "node node_modules/react-native/local-cli/cli.js start",
+        "test": "jest"
+    },
+    "dependencies": {
+        "electron": "^1.8.1",
+        "lottie-react-native": "2.2.7",
+        "merge": "^1.2.0",
+        "prop-types": "^15.6.0",
+        "react": "16.0.0-beta.5",
+        "react-native": "0.49.3",
+        "react-native-animatable": "^1.2.4",
+        "react-native-camera": "^0.10.0",
+        "react-native-device-info": "^0.11.0",
+        "react-native-linear-gradient": "^2.3.0",
+        "react-native-navigation": "^1.1.235"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-jest": "20.0.3",
+        "babel-loader": "^7.1.2",
+        "babel-preset-react-native": "3.0.1",
+        "eslint-config-rallycoding": "^3.2.0",
+        "jest": "20.0.4",
+        "react-test-renderer": "16.0.0-alpha.12"
+    },
+    "jest": {
+        "preset": "react-native"
+    }
 }
