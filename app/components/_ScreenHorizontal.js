@@ -95,6 +95,7 @@ class ScreenHorizontal extends PureComponent {
             .catch(error => {
                 this.setState({ error, loading: false });
                 console.log(error);
+                throw new Error('Error in API fetching');
             });
 
         this.page += 1;
@@ -132,15 +133,24 @@ class ScreenHorizontal extends PureComponent {
     };
 
     flipFollow = AlbumID => {
-        const tempArray = [...this.state.data];
+        // const tempArray = [...this.state.data];
 
-        tempArray.forEach((data, index) => {
-            if (data.AlbumID === AlbumID) {
-                tempArray[index].canRepost = !data.canRepost;
+        // tempArray.forEach((data, index) => {
+        //     if (data.AlbumID === AlbumID) {
+        //         tempArray[index].canRepost = !data.canRepost;
+        //     }
+        //     return data;
+        // });
+
+        const newArray = [...this.state.data].map(a => {
+            const copyA = { ...a };
+            if (copyA.AlbumID === AlbumID) {
+                copyA.canRepost = !copyA.canRepost;
             }
-            return data;
+            return copyA;
         });
-        this.setState({ data: tempArray }, () => {
+
+        this.setState({ data: newArray }, () => {
             this.forceUpdate();
         });
     };
