@@ -3,6 +3,8 @@ import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
 import { SharedElementTransition } from 'react-native-navigation';
 
+import * as Animatable from 'react-native-animatable';
+
 class Screen extends Component {
     constructor(props) {
         super(props);
@@ -30,16 +32,28 @@ class Screen extends Component {
                         easing: 'FastOutSlowIn'
                     }}
                 >
-                    <Image style={{ height: 300, width: '100%' }} source={{ uri: AlbumCover }} />
+                    <Image
+                        style={{ height: 300, width: '100%' }}
+                        source={{ uri: AlbumCover }}
+                        blurRadius={3}
+                    />
                 </SharedElementTransition>
-                <Text style={text}>
-                    {lorem} {lorem} {lorem}
-                    {lorem} {lorem} {lorem}
-                </Text>
-                <Text style={text} />
-                <Text style={text}> {AlbumName} </Text>
-                <Text style={text}> {MomentDate} </Text>
-                <Text style={text}> {canRepost} </Text>
+                <Animatable.View
+                    animation={'fadeInUpBig'}
+                    duration={1000}
+                    delay={100}
+                    easing={'ease-in-out'}
+                    useNativeDriver
+                >
+                    <Text style={text}>
+                        {lorem} {lorem} {lorem}
+                        {lorem} {lorem} {lorem}
+                    </Text>
+                    <Text style={text} />
+                    <Text style={text}> {AlbumName} </Text>
+                    <Text style={text}> {MomentDate} </Text>
+                    <Text style={text}> {canRepost} </Text>
+                </Animatable.View>
             </ScrollView>
         );
     }
